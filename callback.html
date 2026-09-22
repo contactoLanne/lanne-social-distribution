@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TikTok Authorization — Lanne Social Distribution</title>
+<style>
+body{font-family:Arial,sans-serif;max-width:760px;margin:60px auto;padding:0 20px;line-height:1.55;color:#171717}
+.card{border:1px solid #ddd;border-radius:14px;padding:24px;margin-top:24px}
+code{display:block;word-break:break-all;background:#f5f5f5;padding:14px;border-radius:10px}
+button{padding:10px 16px;border:0;border-radius:8px;cursor:pointer}
+.ok{color:#067a46}.err{color:#b42318}
+</style>
+</head>
+<body>
+<h1>TikTok Authorization</h1>
+<div class="card" id="box"></div>
+<script>
+const p = new URLSearchParams(location.search);
+const code = p.get('code');
+const state = p.get('state');
+const scopes = p.get('scopes');
+const error = p.get('error');
+const errorDescription = p.get('error_description');
+const box = document.getElementById('box');
+
+if (error) {
+  box.innerHTML = '<h2 class="err">Authorization failed</h2><p>' +
+    (errorDescription || error) + '</p>';
+} else if (code) {
+  box.innerHTML =
+    '<h2 class="ok">Authorization received</h2>' +
+    '<p>Copy the authorization code below. It is temporary and will be exchanged for your TikTok access token inside n8n.</p>' +
+    '<code id="authCode"></code>' +
+    '<p><button id="copyBtn">Copy authorization code</button></p>' +
+    '<p><strong>Scopes:</strong> ' + (scopes || 'not returned') + '</p>';
+  document.getElementById('authCode').textContent = code;
+  document.getElementById('copyBtn').onclick = async () => {
+    await navigator.clipboard.writeText(code);
+    document.getElementById('copyBtn').textContent = 'Copied';
+  };
+} else {
+  box.innerHTML = '<h2>No authorization code found</h2><p>Start the TikTok authorization flow first.</p>';
+}
+</script>
+</body>
+</html>
