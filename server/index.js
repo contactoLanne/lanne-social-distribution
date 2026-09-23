@@ -164,6 +164,7 @@ app.get("/api/auth/tiktok/diagnostics", (_req,res) => {
     client_key_present: Boolean(CLIENT_KEY),
     client_key_length: CLIENT_KEY.length,
     client_key_sha256: clientKeySha256,
+    client_key_matches_expected: clientKeySha256 === "b68faf11013383ab8c6bdb60d1e9b78ff6d7a4b3ffc82da121e20b4394463984",
     redirect_uri: REDIRECT_URI,
     scopes: SCOPES,
     authorize_endpoint: "https://www.tiktok.com/v2/auth/authorize/"
