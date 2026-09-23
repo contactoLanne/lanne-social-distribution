@@ -4,44 +4,56 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>TikTok Authorization — Lanne Social Distribution</title>
-<style>
-body{font-family:Arial,sans-serif;max-width:760px;margin:60px auto;padding:0 20px;line-height:1.55;color:#171717}
-.card{border:1px solid #ddd;border-radius:14px;padding:24px;margin-top:24px}
-code{display:block;word-break:break-all;background:#f5f5f5;padding:14px;border-radius:10px}
-button{padding:10px 16px;border:0;border-radius:8px;cursor:pointer}
-.ok{color:#067a46}.err{color:#b42318}
-</style>
+<link rel="stylesheet" href="app.css">
 </head>
 <body>
-<h1>TikTok Authorization</h1>
-<div class="card" id="box"></div>
+<div class="shell" style="max-width:760px">
+<header class="topbar"><a class="brand" href="index.html">Lanne Social Distribution</a></header>
+<section class="hero">
+<span class="eyebrow">TikTok Login Kit</span>
+<h1 style="font-size:44px">Completing authorization…</h1>
+<p class="lead">The authorization code is sent directly to the secure backend for token exchange. The TikTok client secret never enters this page.</p>
+</section>
+<section class="card">
+<div id="status" class="status">Processing TikTok response…</div>
+<div id="backendBox" class="hidden" style="margin-top:14px">
+<div class="field"><label for="backendUrl">Backend URL</label><input id="backendUrl" placeholder="https://your-secure-backend.example.com"></div>
+<button id="save" class="primary" style="margin-top:12px">Save and continue</button>
+</div>
+<p style="margin-top:18px"><a href="app.html">Return to publishing workspace</a></p>
+</section>
+</div>
+<script src="config.js"></script>
 <script>
-const p = new URLSearchParams(location.search);
-const code = p.get('code');
-const state = p.get('state');
-const scopes = p.get('scopes');
-const error = p.get('error');
-const errorDescription = p.get('error_description');
-const box = document.getElementById('box');
+const SESSION_KEY="lsd_tiktok_session", BACKEND_KEY="lsd_backend_url";
+const params=new URLSearchParams(location.search);
+const status=document.getElementById("status"), box=document.getElementById("backendBox"), input=document.getElementById("backendUrl");
+const backend=()=> (localStorage.getItem(BACKEND_KEY)||window.LSD_CONFIG?.backendBaseUrl||"").replace(/\/+$/,"");
+const set=(m,k="")=>{status.textContent=m;status.className="status"+(k?" "+k:"")};
 
-if (error) {
-  box.innerHTML = '<h2 class="err">Authorization failed</h2><p>' +
-    (errorDescription || error) + '</p>';
-} else if (code) {
-  box.innerHTML =
-    '<h2 class="ok">Authorization received</h2>' +
-    '<p>Copy the authorization code below. It is temporary and will be exchanged for your TikTok access token inside n8n.</p>' +
-    '<code id="authCode"></code>' +
-    '<p><button id="copyBtn">Copy authorization code</button></p>' +
-    '<p><strong>Scopes:</strong> ' + (scopes || 'not returned') + '</p>';
-  document.getElementById('authCode').textContent = code;
-  document.getElementById('copyBtn').onclick = async () => {
-    await navigator.clipboard.writeText(code);
-    document.getElementById('copyBtn').textContent = 'Copied';
-  };
-} else {
-  box.innerHTML = '<h2>No authorization code found</h2><p>Start the TikTok authorization flow first.</p>';
+async function finish(){
+  const error=params.get("error");
+  if(error) return set(params.get("error_description")||error,"err");
+  const code=params.get("code"), state=params.get("state");
+  if(!code||!state) return set("TikTok did not return the required authorization code and state.","err");
+  if(!backend()){
+    set("Enter the secure backend URL to finish authorization.","warn");
+    box.classList.remove("hidden");
+    return;
+  }
+  try{
+    set("Exchanging the one-time authorization code securely…");
+    const r=await fetch(backend()+"/api/auth/tiktok/callback",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({code,state})});
+    const data=await r.json();
+    if(!r.ok) throw new Error(data.error||"Authorization failed.");
+    localStorage.setItem(SESSION_KEY,data.session_token);
+    set("TikTok account connected. Redirecting to the publishing workspace…","ok");
+    setTimeout(()=>location.href="app.html",900);
+  }catch(e){set(e.message,"err")}
 }
+document.getElementById("save").onclick=()=>{const v=input.value.trim().replace(/\/+$/,"");if(v){localStorage.setItem(BACKEND_KEY,v);box.classList.add("hidden");finish()}};
+input.value=backend();
+finish();
 </script>
 </body>
 </html>
