@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Publishing Workspace — Lanne Social Distribution</title>
+<meta name="description" content="Creator-controlled TikTok publishing workspace for Lanne Social Distribution.">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+<a class="brand" href="index.html">Lanne Social Distribution</a>
+<nav><a href="publishing.html">Publishing workflow</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></nav>
+</header>
+<section class="hero">
+<span class="eyebrow">TikTok creator publishing workspace</span>
+<h1>Connect. Review. Publish.</h1>
+<p class="lead">Content is sent only after the creator connects their TikTok account, reviews the latest account settings, and explicitly confirms the submission.</p>
+</section>
+<div class="grid">
+<section class="card">
+<h2>1. Backend connection</h2>
+<p class="muted">TikTok secrets and access tokens stay on the server. They are never stored in this website.</p>
+<div class="field"><label for="backendUrl">Backend URL</label><input id="backendUrl" placeholder="https://your-secure-backend.example.com"></div>
+<div class="row" style="margin-top:12px">
+<button class="secondary" id="saveBackend">Save backend URL</button>
+<button class="secondary" id="checkBackend">Check connection</button>
+</div>
+<div id="backendStatus" class="status" style="margin-top:12px">Backend not checked.</div>
+</section>
+<section class="card">
+<h2>2. TikTok account</h2>
+<div id="disconnected">
+<p class="muted">Authorize your own TikTok account with Login Kit and the requested publishing scopes.</p>
+<button class="primary" id="connectTikTok">Continue with TikTok</button>
+</div>
+<div id="connected" class="hidden">
+<div class="profile"><img id="avatar" class="avatar" alt=""><div><strong id="displayName">Connected creator</strong><div id="scopeText" class="muted"></div></div></div>
+<div class="row" style="margin-top:14px"><button class="secondary" id="refreshCreator">Refresh Creator Info</button><button class="danger" id="disconnectTikTok">Disconnect</button></div>
+</div>
+<div id="accountStatus" class="status" style="margin-top:12px">Not connected.</div>
+</section>
+<section class="card full">
+<h2>3. Prepare video</h2>
+<div class="stack">
+<div class="field"><label for="mode">Publishing mode</label><select id="mode"><option value="direct">Direct Post — publish to the connected TikTok profile</option><option value="inbox">Upload — send to TikTok inbox for creator editing</option></select></div>
+<div class="field"><label for="video">Original video file</label><input id="video" type="file" accept="video/mp4,video/quicktime,video/webm"><div id="fileMeta" class="muted">MP4, MOV or WebM. The backend validates the upload before sending it to TikTok.</div></div>
+</div>
+</section>
+<section class="card" id="creatorCard">
+<h2>4. Latest Creator Info</h2>
+<p class="muted">For Direct Post, privacy and interaction choices come from TikTok's latest Creator Info response.</p>
+<div id="creatorEmpty" class="status warn">Connect TikTok and load Creator Info before publishing.</div>
+<div id="creatorInfo" class="hidden"><div class="kv"><div>Creator</div><div id="creatorName">—</div><div>Max duration</div><div id="maxDuration">—</div><div>Privacy options</div><div id="privacyList">—</div></div></div>
+</section>
+<section class="card" id="settingsCard">
+<h2>5. Review settings</h2>
+<div class="stack">
+<div class="field"><label for="caption">Caption</label><textarea id="caption" maxlength="2200" placeholder="Write the caption that will be reviewed before publishing."></textarea><div class="muted"><span id="captionCount">0</span>/2200</div></div>
+<div class="field direct-only"><label for="privacy">Privacy</label><select id="privacy"><option value="">Load Creator Info first</option></select></div>
+<label class="checkbox direct-only"><input id="allowComment" type="checkbox"> Allow comments</label>
+<label class="checkbox direct-only"><input id="allowDuet" type="checkbox"> Allow Duet</label>
+<label class="checkbox direct-only"><input id="allowStitch" type="checkbox"> Allow Stitch</label>
+<label class="checkbox direct-only"><input id="brandOrganic" type="checkbox"> This post promotes the creator's own business</label>
+<label class="checkbox direct-only"><input id="isAigc" type="checkbox"> This video is AI-generated content</label>
+</div>
+</section>
+<section class="card full">
+<h2>6. Explicit confirmation</h2>
+<div class="review"><label class="checkbox"><input id="consent" type="checkbox"> I reviewed the target TikTok account, selected settings and video. I authorize Lanne Social Distribution to send this content to my connected TikTok account.</label></div>
+<div class="row" style="margin-top:14px"><button class="primary" id="publish" disabled>Publish to TikTok</button></div>
+<div id="publishStatus" class="status" style="margin-top:12px">Waiting for creator confirmation.</div>
+</section>
+<section class="card full hidden" id="resultCard">
+<h2>7. Publishing status</h2>
+<div class="kv"><div>Publish ID</div><div><code id="publishId"></code></div><div>Status</div><div id="finalStatus">—</div></div>
+<div class="row" style="margin-top:14px"><button class="secondary" id="refreshStatus">Refresh status</button></div>
+</section>
+</div>
+<footer class="footer">Creator-controlled publishing · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a></footer>
+</div>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
