@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Publishing Workflow — Lanne Social Distribution</title>
+<meta name="description" content="How creators review and publish short-form video through Lanne Social Distribution.">
+<style>
+:root{--bg:#fbfaf8;--ink:#171717;--muted:#666;--card:#fff;--line:#e7e2dc}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65}
+.wrap{max-width:900px;margin:auto;padding:0 24px}.top{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--line)}a{color:var(--ink)}
+h1{font-size:48px;line-height:1.05;letter-spacing:-.035em;margin:60px 0 16px}h2{margin-top:42px}.lead{font-size:19px;color:var(--muted)}
+.box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin:18px 0}.flow{display:grid;gap:12px}.row{display:grid;grid-template-columns:70px 1fr;gap:16px;align-items:start}.num{font-size:12px;color:var(--muted);padding-top:4px}
+.footer{border-top:1px solid var(--line);margin-top:54px;padding:24px 0 44px}.footer a{margin-right:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><strong><a href="index.html" style="text-decoration:none">Lanne Social Distribution</a></strong><div><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></div></header>
+<main>
+<h1>Publishing workflow</h1>
+<p class="lead">Creators remain in control of what is sent to their connected accounts. The workflow uses official platform authorization and publishing APIs.</p>
+
+<h2>TikTok Direct Post</h2>
+<div class="flow">
+  <div class="row"><div class="num">STEP 1</div><div class="box"><strong>Account authorization</strong><br>The creator connects their own TikTok account through Login Kit and grants only the permissions required for the enabled publishing features.</div></div>
+  <div class="row"><div class="num">STEP 2</div><div class="box"><strong>Latest Creator Info</strong><br>Before each Direct Post, the workspace requests the creator's current account information and available privacy and interaction settings.</div></div>
+  <div class="row"><div class="num">STEP 3</div><div class="box"><strong>Creator review</strong><br>The creator reviews the target TikTok account and caption, manually chooses one of the privacy options returned by Creator Info, and chooses which currently available interactions to allow. No interaction option is selected by default.</div></div>
+  <div class="row"><div class="num">STEP 4</div><div class="box"><strong>Explicit submission</strong><br>The review screen states that choosing to publish and submitting the form authorizes the workspace to send that video and the selected settings to the connected TikTok account.</div></div>
+  <div class="row"><div class="num">STEP 5</div><div class="box"><strong>Direct Post and status</strong><br>Only after the creator submits the review does the workflow initialize the post, upload the video, and query publishing status until a final result is returned.</div></div>
+</div>
+
+<h2>Creator choices</h2>
+<div class="box">
+  <p><strong>Caption:</strong> editable before submission.</p>
+  <p><strong>Privacy:</strong> selected manually from the options returned for the connected creator.</p>
+  <p><strong>Comments, Duet, Stitch:</strong> offered only when available for the connected account; none are enabled by default.</p>
+  <p><strong>Do not publish:</strong> the creator can choose not to send the post to TikTok.</p>
+</div>
+
+<h2>Connected-platform security</h2>
+<p>Authorization tokens are used only to perform actions the creator has authorized. The service does not sell personal data. Tokens can be revoked through the relevant platform and are handled as described in the Privacy Policy.</p>
+</main>
+<footer class="footer"><a href="index.html">Home</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><p>Contact: lauanne.correia@gmail.com</p></footer>
+</div>
+</body>
+</html>
