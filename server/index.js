@@ -181,7 +181,8 @@ app.get("/api/auth/tiktok/start", (req,res,next) => {
       response_type: "code",
       scope: SCOPES,
       redirect_uri: REDIRECT_URI,
-      state
+      state,
+      disable_auto_auth: "1"
     });
     res.redirect("https://www.tiktok.com/v2/auth/authorize/?" + query.toString());
   } catch (e) { next(e); }
