@@ -3,20 +3,82 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lanne Social Distribution</title>
+<title>Lanne Social Distribution — Creator Publishing Workspace</title>
+<meta name="description" content="A creator publishing workspace for reviewing and distributing original short-form videos to authorized channels.">
 <style>
-body{font-family:Arial,sans-serif;max-width:760px;margin:60px auto;padding:0 20px;line-height:1.6;color:#171717}
-a{color:#111}.card{border:1px solid #ddd;border-radius:14px;padding:24px;margin-top:24px}
+:root{--bg:#fbfaf8;--ink:#171717;--muted:#666;--card:#fff;--line:#e7e2dc;--accent:#5a3f37}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+.wrap{max-width:1040px;margin:auto;padding:0 24px}.top{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--line)}
+.brand{font-weight:800;letter-spacing:-.02em}.nav a{margin-left:18px;color:var(--ink);text-decoration:none}.hero{padding:76px 0 54px;display:grid;grid-template-columns:1.2fr .8fr;gap:36px;align-items:center}
+h1{font-size:clamp(42px,7vw,72px);line-height:1.02;letter-spacing:-.045em;margin:0 0 20px}h2{font-size:30px;letter-spacing:-.025em;margin:0 0 12px}
+.lead{font-size:20px;color:var(--muted);max-width:720px}.pill{display:inline-block;padding:7px 11px;border:1px solid var(--line);border-radius:999px;font-size:13px;margin-bottom:16px;background:#fff}
+.cta{display:inline-block;margin-top:18px;padding:12px 18px;background:var(--ink);color:white;text-decoration:none;border-radius:10px}.ghost{background:#fff;color:var(--ink);border:1px solid var(--line);margin-left:8px}
+.card,.step{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.section{padding:54px 0}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.n{font-size:12px;color:var(--muted);margin-bottom:10px}.small{font-size:14px;color:var(--muted)}
+.footer{margin-top:54px;border-top:1px solid var(--line);padding:26px 0 48px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.footer a{color:var(--ink)}
+@media(max-width:800px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.nav{display:none}}
 </style>
 </head>
 <body>
-<h1>Lanne Social Distribution</h1>
-<p>Lanne Social Distribution is a social media workflow that helps an authorized creator distribute original short-form videos to connected platforms.</p>
-<div class="card">
-<h2>How it works</h2>
-<p>The creator authorizes their own social accounts. The workflow can prepare and send original video content to authorized platforms using their official APIs.</p>
+<div class="wrap">
+<header class="top">
+  <div class="brand">Lanne Social Distribution</div>
+  <nav class="nav">
+    <a href="publishing.html">Publishing workflow</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero">
+  <div>
+    <span class="pill">Creator publishing workspace</span>
+    <h1>Review once. Publish with control.</h1>
+    <p class="lead">Lanne Social Distribution helps creators prepare, review, and send original short-form video content to channels they have explicitly authorized.</p>
+    <a class="cta" href="publishing.html">See the publishing workflow</a>
+    <a class="cta ghost" href="privacy.html">How data is handled</a>
+  </div>
+  <div class="card">
+    <h2>Creator control first</h2>
+    <p>Connected platforms are authorized by the account owner. TikTok posts are reviewed before submission, including caption, privacy, and available interaction settings.</p>
+    <p class="small">The workspace does not sell personal data and does not publish to an account that has not been authorized.</p>
+  </div>
+</section>
+
+<section class="section">
+  <h2>What the workspace does</h2>
+  <div class="grid">
+    <div class="card"><strong>Organize owned content</strong><p>Prepare original short-form videos and the metadata needed for distribution.</p></div>
+    <div class="card"><strong>Review platform settings</strong><p>See account information and choose the settings available for the connected destination.</p></div>
+    <div class="card"><strong>Track delivery</strong><p>Record publishing status and platform identifiers so creators can avoid accidental duplicate submissions.</p></div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Publishing flow</h2>
+  <div class="steps">
+    <div class="step"><div class="n">01</div><strong>Connect</strong><p class="small">The creator authorizes a supported account through the platform's official authorization flow.</p></div>
+    <div class="step"><div class="n">02</div><strong>Prepare</strong><p class="small">The workspace prepares the selected video, caption, and publishing metadata.</p></div>
+    <div class="step"><div class="n">03</div><strong>Review</strong><p class="small">For TikTok, the creator reviews account details, manually chooses privacy and interaction settings, and confirms submission.</p></div>
+    <div class="step"><div class="n">04</div><strong>Publish & track</strong><p class="small">The workspace sends the approved content through the official API and records the publishing result.</p></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="card">
+    <h2>TikTok publishing</h2>
+    <p>Before a TikTok Direct Post is initialized, the workspace retrieves the latest Creator Info, displays the available privacy choices, respects unavailable interaction settings, and asks the creator to review the post before it is submitted.</p>
+    <a href="publishing.html">Read the detailed TikTok publishing flow →</a>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div>© 2026 Lanne Social Distribution</div>
+  <div><a href="terms.html">Terms of Service</a> · <a href="privacy.html">Privacy Policy</a> · <a href="publishing.html">Publishing workflow</a></div>
+  <div>Contact: lauanne.correia@gmail.com</div>
+</footer>
 </div>
-<p><a href="terms.html">Terms of Service</a> · <a href="privacy.html">Privacy Policy</a></p>
-<p>Contact: lauanne.correia@gmail.com</p>
 </body>
 </html>
