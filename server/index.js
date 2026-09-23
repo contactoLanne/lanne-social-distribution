@@ -8,10 +8,10 @@ import crypto from "node:crypto";
 
 const app = express();
 const PORT = Number(process.env.PORT || 8787);
-const CLIENT_KEY = process.env.TIKTOK_CLIENT_KEY;
-const CLIENT_SECRET = process.env.TIKTOK_CLIENT_SECRET;
-const REDIRECT_URI = process.env.TIKTOK_REDIRECT_URI || "https://contactolanne.github.io/lanne-social-distribution/callback.html";
-const SCOPES = process.env.TIKTOK_SCOPES || "user.info.basic,video.publish,video.upload";
+const CLIENT_KEY = (process.env.TIKTOK_CLIENT_KEY || "").trim();
+const CLIENT_SECRET = (process.env.TIKTOK_CLIENT_SECRET || "").trim();
+const REDIRECT_URI = (process.env.TIKTOK_REDIRECT_URI || "https://contactolanne.github.io/lanne-social-distribution/callback.html").trim();
+const SCOPES = (process.env.TIKTOK_SCOPES || "user.info.basic,video.publish,video.upload").trim();
 const allowedOrigins = (process.env.ALLOWED_ORIGINS || "https://contactolanne.github.io").split(",").map(s => s.trim()).filter(Boolean);
 const maxUploadBytes = Number(process.env.MAX_UPLOAD_MB || 250) * 1024 * 1024;
 
@@ -156,6 +156,18 @@ async function fetchStatus(session, publishId) {
 
 app.get("/api/health", (_req,res) => {
   res.json({ok:true, service:"Lanne Social Distribution backend", configured:Boolean(CLIENT_KEY && CLIENT_SECRET)});
+});
+
+app.get("/api/auth/tiktok/diagnostics", (_req,res) => {
+  const clientKeySha256 = CLIENT_KEY ? crypto.createHash("sha256").update(CLIENT_KEY, "utf8").digest("hex") : null;
+  res.json({
+    client_key_present: Boolean(CLIENT_KEY),
+    client_key_length: CLIENT_KEY.length,
+    client_key_sha256: clientKeySha256,
+    redirect_uri: REDIRECT_URI,
+    scopes: SCOPES,
+    authorize_endpoint: "https://www.tiktok.com/v2/auth/authorize/"
+  });
 });
 
 app.get("/api/auth/tiktok/start", (req,res,next) => {
